@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Parser\Grammar\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Antlr4" Version="4.6.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+    <PackageReference Include="QuikGraph" Version="2.5.0" />
+    <PackageReference Include="QuikGraph.Graphviz" Version="2.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Antlr4 Update="Parser\Grammar\TSqlLexer.g4">
+      <CustomToolNamespace>DatabaseMapper.Parser</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Update="Parser\Grammar\TSqlParser.g4">
+      <CustomToolNamespace>DatabaseMapper.Parser</CustomToolNamespace>
+    </Antlr4>
+  </ItemGroup>
+
+</Project>
