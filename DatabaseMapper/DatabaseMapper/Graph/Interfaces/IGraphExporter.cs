@@ -6,7 +6,7 @@ namespace DatabaseMapper.Graph.Interfaces
 {
     public interface IGraphExporter
     {
-        void ExportColumnGraphToGraphviz(EcalcColumnGraph graph, string location);
-        void ExportTableGraphToGraphviz(EcalcTableGraph graph, string location);
+        void ExportColumnGraphToGraphviz(ColumnGraph graph, string location);
+        void ExportTableGraphToGraphviz(TableGraph graph, string location);
     }
 }
