@@ -1,7 +1,7 @@
 ﻿using QuikGraph;
 using System;
 
-namespace DatabaseMapper.Graph
+namespace DatabaseMapper.Core.Graph
 {
     public class ColumnGraph : AdjacencyGraph<ColumnGraphVertex, ColumnGraphEdge>
     {

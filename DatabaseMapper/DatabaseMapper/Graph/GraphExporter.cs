@@ -1,9 +1,9 @@
-﻿using DatabaseMapper.Graph.Interfaces;
+﻿using DatabaseMapper.Core.Graph.Interfaces;
 using QuikGraph.Graphviz;
 using QuikGraph.Graphviz.Dot;
 using System.IO;
 
-namespace DatabaseMapper.Graph
+namespace DatabaseMapper.Core.Graph
 {
     public class GraphExporter : IGraphExporter
     {

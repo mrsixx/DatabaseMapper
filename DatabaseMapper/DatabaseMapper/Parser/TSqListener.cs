@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace DatabaseMapper.Parser
+namespace DatabaseMapper.Core.Parser
 {
     public class TSqListener : TSqlParserBaseListener
     {

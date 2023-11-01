@@ -1,11 +1,11 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using DatabaseMapper.Parser.Interfaces;
+using DatabaseMapper.Core.Parser.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DatabaseMapper.Parser
+namespace DatabaseMapper.Core.Parser
 {
     public class QueryParser : IQueryParser
     {

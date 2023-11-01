@@ -1,0 +1,218 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "Antlr4.Runtime/4.6.6": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "lib/netstandard1.1/Antlr4.Runtime.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard1.1/Antlr4.Runtime.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "QuikGraph/2.5.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/QuikGraph.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/QuikGraph.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "QuikGraph.Graphviz/2.5.0": {
+        "type": "package",
+        "dependencies": {
+          "QuikGraph": "2.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/QuikGraph.Graphviz.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/QuikGraph.Graphviz.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "DatabaseMapper.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Antlr4.Runtime": "4.6.6",
+          "QuikGraph": "2.5.0",
+          "QuikGraph.Graphviz": "2.5.0"
+        },
+        "compile": {
+          "bin/placeholder/DatabaseMapper.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DatabaseMapper.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Antlr4.Runtime/4.6.6": {
+      "sha512": "NlbRjkTCidRh1QeWvGfFPKq0sqpPZrAwGaSTV0X2jL8buZxTf9/aQ7PehFAmc7erXLUQ3YMZEVZU86aQwma2+w==",
+      "type": "package",
+      "path": "antlr4.runtime/4.6.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "antlr4.runtime.4.6.6.nupkg.sha512",
+        "antlr4.runtime.nuspec",
+        "lib/net20/Antlr4.Runtime.dll",
+        "lib/net20/Antlr4.Runtime.xml",
+        "lib/net30/Antlr4.Runtime.dll",
+        "lib/net30/Antlr4.Runtime.xml",
+        "lib/net35-cf/Antlr4.Runtime.dll",
+        "lib/net35-cf/Antlr4.Runtime.xml",
+        "lib/net35-client/Antlr4.Runtime.dll",
+        "lib/net35-client/Antlr4.Runtime.xml",
+        "lib/net40-client/Antlr4.Runtime.dll",
+        "lib/net40-client/Antlr4.Runtime.xml",
+        "lib/net45/Antlr4.Runtime.dll",
+        "lib/net45/Antlr4.Runtime.xml",
+        "lib/netstandard1.1/Antlr4.Runtime.dll",
+        "lib/netstandard1.1/Antlr4.Runtime.xml",
+        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/Antlr4.Runtime.dll",
+        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/Antlr4.Runtime.xml"
+      ]
+    },
+    "QuikGraph/2.5.0": {
+      "sha512": "sG+mrPpXwxlXknRK5VqWUGiOmDACa9X+3ftlkQIMgOZUqxVOQSe0+HIU9PTjwqazy0pqSf8MPDXYFGl0GYWcKw==",
+      "type": "package",
+      "path": "quikgraph/2.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net35/QuikGraph.dll",
+        "lib/net35/QuikGraph.xml",
+        "lib/net40/QuikGraph.dll",
+        "lib/net40/QuikGraph.xml",
+        "lib/net45/QuikGraph.dll",
+        "lib/net45/QuikGraph.xml",
+        "lib/netstandard1.3/QuikGraph.dll",
+        "lib/netstandard1.3/QuikGraph.xml",
+        "lib/netstandard2.0/QuikGraph.dll",
+        "lib/netstandard2.0/QuikGraph.xml",
+        "quikgraph.2.5.0.nupkg.sha512",
+        "quikgraph.nuspec",
+        "quikgraph_logo.png"
+      ]
+    },
+    "QuikGraph.Graphviz/2.5.0": {
+      "sha512": "pCKpErtHGxUi72OT+2aIg1pdHdUqpqEM5J/i9rmVsEVDE4X0xb1HBPWdxv/FLZmbBjk0ZogZXZttUL3CnAPpNw==",
+      "type": "package",
+      "path": "quikgraph.graphviz/2.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net35/QuikGraph.Graphviz.dll",
+        "lib/net35/QuikGraph.Graphviz.xml",
+        "lib/net40/QuikGraph.Graphviz.dll",
+        "lib/net40/QuikGraph.Graphviz.xml",
+        "lib/net45/QuikGraph.Graphviz.dll",
+        "lib/net45/QuikGraph.Graphviz.xml",
+        "lib/netstandard1.3/QuikGraph.Graphviz.dll",
+        "lib/netstandard1.3/QuikGraph.Graphviz.xml",
+        "lib/netstandard2.0/QuikGraph.Graphviz.dll",
+        "lib/netstandard2.0/QuikGraph.Graphviz.xml",
+        "quikgraph.graphviz.2.5.0.nupkg.sha512",
+        "quikgraph.graphviz.nuspec",
+        "quikgraph_logo.png"
+      ]
+    },
+    "DatabaseMapper.Core/1.0.0": {
+      "type": "project",
+      "path": "../../DatabaseMapper/DatabaseMapper/DatabaseMapper.Core.csproj",
+      "msbuildProject": "../../DatabaseMapper/DatabaseMapper/DatabaseMapper.Core.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "DatabaseMapper.Core >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\mathe\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\mathe\\source\\repos\\DatabaseMapper\\DatabaseMapper.Console\\DatabaseMapper.Console\\DatabaseMapper.Console.csproj",
+      "projectName": "DatabaseMapper.Console",
+      "projectPath": "C:\\Users\\mathe\\source\\repos\\DatabaseMapper\\DatabaseMapper.Console\\DatabaseMapper.Console\\DatabaseMapper.Console.csproj",
+      "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mathe\\source\\repos\\DatabaseMapper\\DatabaseMapper.Console\\DatabaseMapper.Console\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "C:\\Users\\mathe\\source\\repos\\DatabaseMapper\\DatabaseMapper\\DatabaseMapper\\DatabaseMapper.Core.csproj": {
+              "projectPath": "C:\\Users\\mathe\\source\\repos\\DatabaseMapper\\DatabaseMapper\\DatabaseMapper\\DatabaseMapper.Core.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

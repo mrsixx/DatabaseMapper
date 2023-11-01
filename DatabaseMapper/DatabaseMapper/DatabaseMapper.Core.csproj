@@ -24,10 +24,10 @@
 
   <ItemGroup>
     <Antlr4 Update="Parser\Grammar\TSqlLexer.g4">
-      <CustomToolNamespace>DatabaseMapper.Parser</CustomToolNamespace>
+      <CustomToolNamespace>DatabaseMapper.Core.Parser</CustomToolNamespace>
     </Antlr4>
     <Antlr4 Update="Parser\Grammar\TSqlParser.g4">
-      <CustomToolNamespace>DatabaseMapper.Parser</CustomToolNamespace>
+      <CustomToolNamespace>DatabaseMapper.Core.Parser</CustomToolNamespace>
     </Antlr4>
   </ItemGroup>
 

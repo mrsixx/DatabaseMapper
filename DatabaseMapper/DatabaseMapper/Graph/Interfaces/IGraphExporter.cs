@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DatabaseMapper.Graph.Interfaces
+namespace DatabaseMapper.Core.Graph.Interfaces
 {
     public interface IGraphExporter
     {

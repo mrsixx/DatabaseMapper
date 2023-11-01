@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DatabaseMapper.Parser.Interfaces
+namespace DatabaseMapper.Core.Parser.Interfaces
 {
     public interface IQueryParser
     {

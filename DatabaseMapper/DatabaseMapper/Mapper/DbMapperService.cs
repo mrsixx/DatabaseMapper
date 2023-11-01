@@ -1,10 +1,9 @@
-﻿using DatabaseMapper.Graph;
-using DatabaseMapper.Mapper.Interfaces;
-using DatabaseMapper.Parser;
-using DatabaseMapper.Parser.Interfaces;
+﻿using DatabaseMapper.Core.Graph;
+using DatabaseMapper.Core.Mapper.Interfaces;
+using DatabaseMapper.Core.Parser;
 using System.Linq;
 
-namespace DatabaseMapper.Mapper
+namespace DatabaseMapper.Core.Mapper
 {
     public class DbMapperService : IDbMapperService
     {
@@ -23,13 +22,18 @@ namespace DatabaseMapper.Mapper
 
                 var source = relation.Item1.Split('.');
                 var target = relation.Item2.Split('.');
-                var idx1 = vertices.FindIndex(v => v.Table == source[0]);
-                var idx2 = vertices.FindIndex(v => v.Table == target[0]);
+                var sourceColumnName = source.Last();
+                var targetColumnName = target.Last();
+
+                var sourceTblName = relation.Item1.Replace($".{sourceColumnName}", string.Empty);
+                var targetTblName = relation.Item2.Replace($".{targetColumnName}", string.Empty);
+                var idx1 = vertices.FindIndex(v => v.Table == sourceTblName);
+                var idx2 = vertices.FindIndex(v => v.Table == targetTblName);
                 if (idx1 != -1 && idx2 != -1)
                 {
                     var e1 = vertices[idx1];
                     var e2 = vertices[idx2];
-                    var edge = new TableGraphEdge(e1, e2, source[1], target[1]);
+                    var edge = new TableGraphEdge(e1, e2, sourceColumnName, targetColumnName);
                     if (!model.ContainsEdge(edge))
                         model.AddEdge(edge);
                 }

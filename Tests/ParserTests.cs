@@ -1,7 +1,4 @@
-﻿using DatabaseMapper.Graph;
-using DatabaseMapper.Parser;
-using System;
-using System.Collections.Generic;
+﻿using DatabaseMapper.Core.Parser;
 using Xunit;
 
 namespace Tests

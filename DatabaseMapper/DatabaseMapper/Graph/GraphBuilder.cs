@@ -1,9 +1,9 @@
-﻿using DatabaseMapper.Graph.Interfaces;
+﻿using DatabaseMapper.Core.Graph.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DatabaseMapper.Graph
+namespace DatabaseMapper.Core.Graph
 {
     public class GraphBuilder : IGraphBuilder
     {

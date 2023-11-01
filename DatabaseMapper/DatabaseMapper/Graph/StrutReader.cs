@@ -1,9 +1,9 @@
-﻿using DatabaseMapper.Graph.Interfaces;
+﻿using DatabaseMapper.Core.Graph.Interfaces;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
-namespace DatabaseMapper.Graph
+namespace DatabaseMapper.Core.Graph
 {
     public class StrutReader : IStrutReader
     {

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseMapper\DatabaseMapper\DatabaseMapper.csproj" />
+    <ProjectReference Include="..\DatabaseMapper\DatabaseMapper\DatabaseMapper.Core.csproj" />
   </ItemGroup>
 
 </Project>

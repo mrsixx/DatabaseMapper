@@ -1,6 +1,6 @@
-﻿using DatabaseMapper.Graph;
+﻿using DatabaseMapper.Core.Graph;
 
-namespace DatabaseMapper.Mapper.Interfaces
+namespace DatabaseMapper.Core.Mapper.Interfaces
 {
     public interface IDbMapperService
     {

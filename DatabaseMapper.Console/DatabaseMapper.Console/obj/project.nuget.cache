@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "cOh5kMwA5pQodgNckK4DHpOvxq1entVEGIp6Ea8hyZOQRfoAxmxDCRZhAgz4q09QwdEx9nWUyNjO03TOCGNWFw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mathe\\source\\repos\\DatabaseMapper\\DatabaseMapper.Console\\DatabaseMapper.Console\\DatabaseMapper.Console.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mathe\\.nuget\\packages\\antlr4.runtime\\4.6.6\\antlr4.runtime.4.6.6.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\quikgraph\\2.5.0\\quikgraph.2.5.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\quikgraph.graphviz\\2.5.0\\quikgraph.graphviz.2.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
