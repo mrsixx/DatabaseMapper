@@ -1,30 +1,28 @@
-﻿using Antlr4.Runtime.Misc;
-using DatabaseMapper.Core.Graph.Interfaces;
+﻿using DatabaseMapper.Core.Graph.Interfaces;
 using QuikGraph;
-using QuikGraph.Algorithms;
 using QuikGraph.Graphviz;
 using QuikGraph.Graphviz.Dot;
+using QuikGraph.Serialization;
 using System;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 
 namespace DatabaseMapper.Core.Graph
 {
     public class GraphExporter : IGraphExporter
     {
-        public void ExportColumnGraphToGraphviz(ColumnGraph graph, string location)
+
+        public void ExportTableGraphToFile(TableGraph graph, string dir, string filename)
         {
-            var graphviz = new GraphvizAlgorithm<ColumnGraphVertex, ColumnGraphEdge>(graph);
-            graphviz.FormatVertex += (sender, args) =>
+            var filePath = Path.Combine(dir, $"{filename}.graph");
+            // Use o GraphMLSerializer para salvar o grafo
+            using (var stream = File.Create(filePath))
             {
-                args.VertexFormat.Label = args.Vertex.FullColumnName;
-                args.VertexFormat.Shape = GraphvizVertexShape.Circle;
-            };
-            graphviz.Generate(new FileDotEngine(), location);
+                graph.SerializeToBinary(stream);
+            }
         }
 
-        public void ExportTableGraphToGraphviz(TableGraph graph, string location)
+        public void ExportTableGraphToGraphviz(TableGraph graph, string dir, string filename)
         {
             var clustering = new ClusteredAdjacencyGraph<TableGraphVertex, TableGraphEdge>(graph);
             byte getRandomByte() => Convert.ToByte(new Random().Next(0, 255));
@@ -57,23 +55,31 @@ namespace DatabaseMapper.Core.Graph
                     args.EdgeFormat.Label.Value = args.Edge.EdgeLabel;
                 };
 
-                if(clustering.ClustersCount > 1)
+                if (clustering.ClustersCount > 1)
                 {
                     var i = 0;
                     graphviz.FormatCluster += (sender, args) =>
                     {
-                    
+
                         args.GraphFormat.Label = args.Cluster.Vertices.First().GetSchema();
                         args.GraphFormat.BackgroundColor = new GraphvizColor(byte.MaxValue, getRandomByte(), getRandomByte(), getRandomByte());
                         i++;
                     };
                 }
+                var location = Path.Combine(dir, $"{filename}.dot");
                 graphviz.Generate(new FileDotEngine(), location);
             }
             clustering.ToGraphviz(exportAlgorithm);
-
         }
 
+        public TableGraph ImportTableGraphFromFile(string filePath)
+        {
+            // Use o GraphMLSerializer para salvar o grafo
+            using (var stream = new StreamReader(filePath))
+            {
+                return stream.BaseStream.DeserializeFromBinary<TableGraphVertex, TableGraphEdge, TableGraph>();
+            }
+        }
     }
     public class FileDotEngine : IDotEngine
     {

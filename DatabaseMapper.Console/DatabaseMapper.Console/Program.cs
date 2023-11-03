@@ -11,9 +11,20 @@ Parser.Default.ParseArguments<ExecutionParameters>(args)
 
         ConsoleWriteIfInVerboseMode(p.Verbose, "Modo verboso habilitado");
 
-        var graph = new TableGraph();
         var mapper = new DbMapperService();
         var graphExporter = new GraphExporter();
+        int initialVertexCount = 0, initialEdgesCount = 0;
+        TableGraph graph = null;
+        if (p.HasBaseGraph)
+        {
+            ConsoleWriteIfInVerboseMode(p.Verbose, $"Lendo o grafo em {p.BaseGraphFilePath}...");
+            graph = graphExporter.ImportTableGraphFromFile(p.BaseGraphFilePath);
+            initialVertexCount = graph.VertexCount;
+            initialEdgesCount = graph.EdgeCount;
+            ConsoleWriteIfInVerboseMode(p.Verbose, $"Leitura completa: {initialVertexCount} vértices e {initialEdgesCount} arestas encontradas.");
+        }
+        else
+            graph = new TableGraph();
   
         foreach(var sourceFile in p.SourceFilesPathName)
         {
@@ -33,9 +44,10 @@ Parser.Default.ParseArguments<ExecutionParameters>(args)
         }
         
 
-        ConsoleWriteIfInVerboseMode(p.Verbose, $"Salvando grafo resultante em: {p.OutputPathName}...");
-        graphExporter.ExportTableGraphToGraphviz(graph, p.OutputPathName);
-        Console.WriteLine("Mapeamento concluído!");
+        ConsoleWriteIfInVerboseMode(p.Verbose, $"Salvando arquivos do grafo em: {p.OutputPathDir}...");
+        graphExporter.ExportTableGraphToGraphviz(graph, p.OutputPathDir, p.OutputFileName);
+        graphExporter.ExportTableGraphToFile(graph, p.OutputPathDir, p.OutputFileName);
+        Console.WriteLine($"Mapeamento concluído: {graph.VertexCount - initialVertexCount} vértices e {graph.EdgeCount - initialEdgesCount} arestas foram adicionadas ao grafo!");
     });
 
 

@@ -2,7 +2,7 @@
   "profiles": {
     "DatabaseMapper.Console": {
       "commandName": "Project",
-      "commandLineArgs": "-v --source=C:\\Users\\mathe\\Desktop\\graph-source.sql --output=C:\\Users\\mathe\\Desktop\\output.txt"
+      "commandLineArgs": "-v -s C:\\Users\\mathe\\Desktop\\graph-source2.sql -o C:\\Users\\mathe\\Desktop\\ -f batata -i C:\\Users\\mathe\\Desktop\\batata.graph"
     }
   }
 }

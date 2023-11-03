@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace DatabaseMapper.Core.Graph
 {
+    [Serializable]
     public class TableGraph : AdjacencyGraph<TableGraphVertex, TableGraphEdge>
     {
         public TableGraph() : base(allowParallelEdges: false) { }
@@ -11,6 +12,7 @@ namespace DatabaseMapper.Core.Graph
 
     }
 
+    [Serializable]
     public class TableGraphEdge : IEdge<TableGraphVertex>
     {
         public TableGraphVertex Source { get; }
@@ -34,7 +36,8 @@ namespace DatabaseMapper.Core.Graph
             TargetColumn = targetColumn;
         }
     }
-
+    
+    [Serializable]
     public class TableGraphVertex
     {
         public string Table { get; set; }
