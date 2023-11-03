@@ -32,7 +32,7 @@ namespace DatabaseMapper.Core.Parser
             return listener.Relations;
         }
 
-        public Dictionary<string, string> ExtractTables()
+        public Dictionary<string, int> ExtractTables()
         {
 
             var reader = new StringReader(_query);
@@ -43,7 +43,7 @@ namespace DatabaseMapper.Core.Parser
             var fileCtx = parser.tsql_file();
             var listener = new TSqListener();
             _walker.Walk(listener, fileCtx);
-            return listener.TableAliases;
+            return listener.Tables;
         }
     }
 }

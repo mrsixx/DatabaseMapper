@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DatabaseMapper.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "-v --source=C:\\Users\\mathe\\Desktop\\graph-source.sql --output=C:\\Users\\mathe\\Desktop\\output.txt"
+    }
+  }
+}

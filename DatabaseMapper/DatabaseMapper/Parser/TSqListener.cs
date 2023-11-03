@@ -8,10 +8,12 @@ namespace DatabaseMapper.Core.Parser
     public class TSqListener : TSqlParserBaseListener
     {
         public Dictionary<string, string> TableAliases { get; }
+        public Dictionary<string, int> Tables { get; }
         public List<Tuple<string, string>> Relations { get; }
 
         public TSqListener()
         {
+            Tables = new Dictionary<string, int>();
             TableAliases = new Dictionary<string, string>();
             Relations = new List<Tuple<string, string>>();
         }
@@ -29,6 +31,11 @@ namespace DatabaseMapper.Core.Parser
                 }
                 else if (!TableAliases.ContainsKey(currentTableName))
                     TableAliases.Add(currentTableName, currentTableName);
+
+                if (!Tables.ContainsKey(currentTableName))
+                    Tables.Add(currentTableName, 0);
+
+                Tables[currentTableName] += 1;
             }
         }
 
@@ -57,8 +64,6 @@ namespace DatabaseMapper.Core.Parser
         public override void EnterSelect_statement([NotNull] TSqlParser.Select_statementContext context)
         {
             TableAliases.Clear();
-            Relations.Clear();
-
         }
 
         public override void ExitSelect_statement([NotNull] TSqlParser.Select_statementContext context)

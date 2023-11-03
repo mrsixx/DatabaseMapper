@@ -5,7 +5,7 @@ namespace DatabaseMapper.Core.Parser.Interfaces
 {
     public interface IQueryParser
     {
-        Dictionary<string, string> ExtractTables();
+        Dictionary<string, int> ExtractTables();
         List<Tuple<string, string>> ExtractRelationships();
     }
 }

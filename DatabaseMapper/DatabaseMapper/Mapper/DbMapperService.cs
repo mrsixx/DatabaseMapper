@@ -13,8 +13,9 @@ namespace DatabaseMapper.Core.Mapper
             var tables = queryParser.ExtractTables();
             var relationships = queryParser.ExtractRelationships();
 
-            foreach (var table in tables.Values)
-                model.AddVertex(table);
+            foreach (var table in tables.Keys)
+                if(model.Vertices.ToList().FindIndex(v => v.Table == table) == -1)
+                    model.AddVertex(table);
 
             var vertices = model.Vertices.ToList();
             foreach (var relation in relationships)
