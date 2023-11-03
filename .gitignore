@@ -2,9 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/DatabaseMapper/DatabaseMapper/bin/Debug/netstandard2.0
+/DatabaseMapper/DatabaseMapper/bin
 /.vs
 /DatabaseMapper/DatabaseMapper/obj
 /DatabaseMapper/DatabaseMapper/DatabaseMapper.csproj.user
 /Tests/bin/Debug/net5.0
 /Tests/obj
+/DatabaseMapper.Console/DatabaseMapper.Console/bin
+/DatabaseMapper.Console/DatabaseMapper.Console/obj
