@@ -18,9 +18,8 @@ namespace DatabaseMapper.Core.Parser
             _walker = new ParseTreeWalker();
         }
 
-        public List<Tuple<string, string>> ExtractRelationships()
+        public QueryMetadata ExtractMetadata()
         {
-
             var reader = new StringReader(_query);
             var charStream = new AntlrInputStream(reader);
             var lexer = new TSqlLexer(new CaseChangingCharStream(charStream, true));
@@ -28,22 +27,13 @@ namespace DatabaseMapper.Core.Parser
             var parser = new TSqlParser(tokenStream);
             var fileCtx = parser.tsql_file();
             var listener = new TSqListener();
+            var metadata = new QueryMetadata();
             _walker.Walk(listener, fileCtx);
-            return listener.Relations;
-        }
 
-        public Dictionary<string, int> ExtractTables()
-        {
 
-            var reader = new StringReader(_query);
-            var charStream = new AntlrInputStream(reader);
-            var lexer = new TSqlLexer(new CaseChangingCharStream(charStream, true));
-            var tokenStream = new CommonTokenStream(lexer);
-            var parser = new TSqlParser(tokenStream);
-            var fileCtx = parser.tsql_file();
-            var listener = new TSqListener();
-            _walker.Walk(listener, fileCtx);
-            return listener.Tables;
+            metadata.CopyTables(listener.Tables);
+            metadata.CopyRelationships(listener.Relations);
+            return metadata;
         }
     }
 }

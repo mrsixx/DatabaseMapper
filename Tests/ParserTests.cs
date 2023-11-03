@@ -10,11 +10,10 @@ namespace Tests
         public void SimpleQuery()
         {
             var parser = new QueryParser("SELECT * FROM SENHA WHERE CODSEQ = 0");
-            var relations = parser.ExtractRelationships();
-            var tables = parser.ExtractTables();
-            Assert.Single(tables);
-            Assert.True(tables.ContainsKey("SENHA"));
-            Assert.Empty(relations);
+            var metadata = parser.ExtractMetadata();
+            Assert.Single(metadata.Tables);
+            Assert.True(metadata.Tables.ContainsKey("SENHA"));
+            Assert.Empty(metadata.Relations);
         }
 
 
@@ -35,16 +34,16 @@ namespace Tests
                               AND e.prod = 0;";
 
             var parser = new QueryParser(query);
-            var relations = parser.ExtractRelationships();
+            var metadata = parser.ExtractMetadata();
 
-            Assert.Equal(4, relations.Count);
-            Assert.Contains(relations,
+            Assert.Equal(4, metadata.Relations.Count);
+            Assert.Contains(metadata.Relations,
                 (rel) => rel.Item1 == "EVENTOS.CODSEQ" && rel.Item2 == "TAPONT.CODEVENTO");
-            Assert.Contains(relations,
+            Assert.Contains(metadata.Relations,
                 (rel) => rel.Item1 == "OPERADOR.CODSEQ" && rel.Item2 == "TAPONT.CODOPERADOR");
-            Assert.Contains(relations,
+            Assert.Contains(metadata.Relations,
                 (rel) => rel.Item1 == "MAQUINAS.CODSEQ" && rel.Item2 == "TAPONT.CODMAQUINA");
-            Assert.Contains(relations,
+            Assert.Contains(metadata.Relations,
                 (rel) => rel.Item1 == "PROCS.CODSEQ" && rel.Item2 == "TAPONT.CODPROC");
         }
     }

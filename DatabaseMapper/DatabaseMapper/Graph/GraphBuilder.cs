@@ -1,4 +1,5 @@
 ﻿using DatabaseMapper.Core.Graph.Interfaces;
+using QuikGraph.Algorithms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace DatabaseMapper.Core.Graph
         public TableGraph BuildTablesGraph(IEnumerable<string> tables, IEnumerable<Tuple<string, string>> relations)
         {
             var graph = new TableGraph();
-
+            
             foreach (var table in tables)
                 graph.AddVertex(table);
 
@@ -55,7 +56,7 @@ namespace DatabaseMapper.Core.Graph
                         graph.AddEdge(edge);
                 }
             }
-
+  
             return graph;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using QuikGraph;
 using System;
+using System.Linq;
 
 namespace DatabaseMapper.Core.Graph
 {
@@ -19,9 +20,9 @@ namespace DatabaseMapper.Core.Graph
         public string SourceColumn { get; set; }
         public string TargetColumn { get; set; }
 
-        public string SourceLabel => $"{Source.Table}.{SourceColumn.ToUpperInvariant()}";
+        public string SourceLabel => $"{Source.GetLabel()}.{SourceColumn.ToUpperInvariant()}";
 
-        public string TargetLabel => $"{Target.Table}.{TargetColumn.ToUpperInvariant()}";
+        public string TargetLabel => $"{Target.GetLabel()}.{TargetColumn.ToUpperInvariant()}";
 
         public string EdgeLabel => $"{SourceLabel} -> {TargetLabel}";
 
@@ -37,6 +38,23 @@ namespace DatabaseMapper.Core.Graph
     public class TableGraphVertex
     {
         public string Table { get; set; }
+
+        public string GetLabel()
+        {
+            var split = Table.Split('.');
+            if (split.Length > 1)
+                return split[1];
+
+            return split[0];
+        }
+        public string GetSchema()
+        {
+            var split = Table.Split('.');
+            if(split.Length > 1)
+                return split[0];
+
+            return String.Empty;
+        }
 
         public TableGraphVertex(string tableName)
         {

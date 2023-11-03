@@ -10,8 +10,9 @@ namespace DatabaseMapper.Core.Mapper
         public void IncrementModel(TableGraph model, string query)
         {
             var queryParser = new QueryParser(query);
-            var tables = queryParser.ExtractTables();
-            var relationships = queryParser.ExtractRelationships();
+            var queryMetadata = queryParser.ExtractMetadata();
+            var tables = queryMetadata.Tables;
+            var relationships = queryMetadata.Relations;
 
             foreach (var table in tables.Keys)
                 if(model.Vertices.ToList().FindIndex(v => v.Table == table) == -1)

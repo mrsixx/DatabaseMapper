@@ -1,7 +1,13 @@
-﻿using DatabaseMapper.Core.Graph.Interfaces;
+﻿using Antlr4.Runtime.Misc;
+using DatabaseMapper.Core.Graph.Interfaces;
+using QuikGraph;
+using QuikGraph.Algorithms;
 using QuikGraph.Graphviz;
 using QuikGraph.Graphviz.Dot;
+using System;
 using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
 
 namespace DatabaseMapper.Core.Graph
 {
@@ -20,21 +26,52 @@ namespace DatabaseMapper.Core.Graph
 
         public void ExportTableGraphToGraphviz(TableGraph graph, string location)
         {
-            var graphviz = new GraphvizAlgorithm<TableGraphVertex, TableGraphEdge>(graph);
-            graphviz.FormatVertex += (sender, args) =>
+            var clustering = new ClusteredAdjacencyGraph<TableGraphVertex, TableGraphEdge>(graph);
+            byte getRandomByte() => Convert.ToByte(new Random().Next(0, 255));
+            foreach (var cluster in graph.Vertices.GroupBy(v => v.GetSchema()))
             {
-                args.VertexFormat.Label = args.Vertex.Table;
-                args.VertexFormat.Shape = GraphvizVertexShape.Circle;
-            };
-            graphviz.FormatEdge += (sender, args) =>
-            {
-                args.EdgeFormat.Label.Value = args.Edge.EdgeLabel;
-                args.EdgeFormat.Font = new GraphvizFont("Arial", 9);
-                args.EdgeFormat.Label.Angle = 0;
-                args.EdgeFormat.TailArrow = new GraphvizArrow(GraphvizArrowShape.Curve);
-            };
+                var c = clustering.AddCluster();
+                c.AddVertexRange(cluster.ToList());
+            }
 
-            graphviz.Generate(new FileDotEngine(), location);
+            void exportAlgorithm(GraphvizAlgorithm<TableGraphVertex, TableGraphEdge> graphviz)
+            {
+                graphviz.GraphFormat.IsCompounded = true;
+                graphviz.CommonVertexFormat.Font = new GraphvizFont("Arial", 8);
+                graphviz.CommonVertexFormat.FixedSize = false;
+                graphviz.CommonVertexFormat.FillColor = GraphvizColor.White;
+                graphviz.CommonVertexFormat.FontColor = GraphvizColor.Black;
+                graphviz.CommonVertexFormat.Shape = GraphvizVertexShape.Circle;
+                graphviz.CommonEdgeFormat.Font = new GraphvizFont("Arial", 3);
+                graphviz.CommonEdgeFormat.Label.Angle = 0;
+                graphviz.CommonEdgeFormat.TailArrow = new GraphvizArrow(GraphvizArrowShape.Curve);
+
+                graphviz.FormatVertex += (sender, args) =>
+                {
+                    args.VertexFormat.Label = args.Vertex.GetLabel();
+                    args.VertexFormat.Group = args.Vertex.GetSchema();
+                };
+
+                graphviz.FormatEdge += (sender, args) =>
+                {
+                    args.EdgeFormat.Label.Value = args.Edge.EdgeLabel;
+                };
+
+                if(clustering.ClustersCount > 1)
+                {
+                    var i = 0;
+                    graphviz.FormatCluster += (sender, args) =>
+                    {
+                    
+                        args.GraphFormat.Label = args.Cluster.Vertices.First().GetSchema();
+                        args.GraphFormat.BackgroundColor = new GraphvizColor(byte.MaxValue, getRandomByte(), getRandomByte(), getRandomByte());
+                        i++;
+                    };
+                }
+                graphviz.Generate(new FileDotEngine(), location);
+            }
+            clustering.ToGraphviz(exportAlgorithm);
+
         }
 
     }
