@@ -7,14 +7,14 @@
 Para usar o DatabaseMapper, você pode executar a aplicação console através do terminal com os seguintes argumentos:
 
 ``` shell
-DatabaseMapper.Console.exe -s <arquivos-queries-sql> -o <diretório-saída> -f <nome-arquivos-saída> [-i <arquivo-base-grafo>] [-v]
+DatabaseMapper.Console.exe -s <arquivos-queries-sql> -f <nome-arquivos-saída> [-o <diretório-saída>] [-i <arquivo-base-grafo>] [-v]
 ```
 
 ### Argumentos:
 
 - `-i, --input-graph` (Opcional): Especifica o caminho para um arquivo com um grafo inicial. Este arquivo já contém a representação de um banco através de um grafo o que permite que o mapeamento seja incremental.
 
-- `-o, --output-dir` (Obrigatório): Especifica o diretório onde os arquivos de saída serão gerados após o processamento. Os arquivos de saída incluirão um arquivo no formato `.graph` e um arquivo no formato `.dot` para a visualização do grafo gerado.
+- `-o, --output-dir` (Opcional): Especifica o diretório onde os arquivos de saída serão gerados após o processamento. Os arquivos de saída incluirão um arquivo no formato `.graph` e um arquivo no formato `.dot` para a visualização do grafo gerado.
 
 - `-f, --output-filename` (Obrigatório): Define o nome dos arquivos de exportação gerados após o processamento. Ex.: `--output-filename=batata` indica que os arquivos `batata.graph` e `batata.dot` serão gerados em `--output-dir` ao final do processamento.
 
