@@ -26,7 +26,7 @@ namespace DatabaseMapper.Core.Graph
 
         public string TargetLabel => $"{Target.GetLabel()}.{TargetColumn.ToUpperInvariant()}";
 
-        public string EdgeLabel => $"{SourceLabel} -> {TargetLabel}";
+        public string EdgeLabel => $"{SourceLabel} -- {TargetLabel}";
 
         public TableGraphEdge(TableGraphVertex source, TableGraphVertex target, string sourceColumn, string targetColumn)
         {

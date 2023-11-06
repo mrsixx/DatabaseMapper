@@ -8,8 +8,8 @@ namespace DatabaseMapper.Console
         [Option('i', "input-graph", Required = false, HelpText = "Arquivo com o grafo inicial.")]
         public string BaseGraphFilePath { get; set; }
 
-        [Option('o', "output-dir", Required = true, HelpText = "Diretório onde serão gerados os arquivos de saída após o processamento (.graph e .dot).")]
-        public string OutputPathDir { get; set; }
+        [Option('o', "output-dir", Required = false, HelpText = "Diretório onde serão gerados os arquivos de saída após o processamento (.graph e .dot).")]
+        public string OutputPathDir { get; set; } = "./";
         
         [Option('f', "output-filename", Required = true, HelpText = "Nome dos arquivos de exportação.")]
         public string OutputFileName { get; set; }

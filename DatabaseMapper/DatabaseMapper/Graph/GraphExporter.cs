@@ -14,6 +14,8 @@ namespace DatabaseMapper.Core.Graph
 
         public void ExportTableGraphToFile(TableGraph graph, string dir, string filename)
         {
+            // cria o diretório se ele não existir
+            Directory.CreateDirectory(dir);
             var filePath = Path.Combine(dir, $"{filename}.graph");
             // Use o GraphMLSerializer para salvar o grafo
             using (var stream = File.Create(filePath))
@@ -62,7 +64,7 @@ namespace DatabaseMapper.Core.Graph
                     {
 
                         args.GraphFormat.Label = args.Cluster.Vertices.First().GetSchema();
-                        args.GraphFormat.BackgroundColor = new GraphvizColor(byte.MaxValue, getRandomByte(), getRandomByte(), getRandomByte());
+                        //args.GraphFormat.BackgroundColor = new GraphvizColor(byte.MaxValue, getRandomByte(), getRandomByte(), getRandomByte());
                         i++;
                     };
                 }
