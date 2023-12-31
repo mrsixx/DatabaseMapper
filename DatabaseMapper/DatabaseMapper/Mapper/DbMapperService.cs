@@ -14,21 +14,21 @@ namespace DatabaseMapper.Core.Mapper
             var tables = queryMetadata.Tables;
             var relationships = queryMetadata.Relations;
 
-            foreach (var table in tables.Keys)
-                if(model.Vertices.ToList().FindIndex(v => v.Table == table) == -1)
-                    model.AddVertex(table);
+            foreach (var table in tables)
+                if(model.Vertices.ToList().FindIndex(v => v.Table == table.TableName) == -1)
+                    model.AddVertex(table.TableName);
 
             var vertices = model.Vertices.ToList();
             foreach (var relation in relationships)
             {
 
-                var source = relation.Item1.Split('.');
-                var target = relation.Item2.Split('.');
+                var source = relation.LeftTable.Split('.');
+                var target = relation.RightTable.Split('.');
                 var sourceColumnName = source.Last();
                 var targetColumnName = target.Last();
 
-                var sourceTblName = relation.Item1.Replace($".{sourceColumnName}", string.Empty);
-                var targetTblName = relation.Item2.Replace($".{targetColumnName}", string.Empty);
+                var sourceTblName = relation.LeftTable.Replace($".{sourceColumnName}", string.Empty);
+                var targetTblName = relation.RightTable.Replace($".{targetColumnName}", string.Empty);
                 var idx1 = vertices.FindIndex(v => v.Table == sourceTblName);
                 var idx2 = vertices.FindIndex(v => v.Table == targetTblName);
                 if (idx1 != -1 && idx2 != -1)

@@ -1,21 +1,26 @@
 ﻿using Antlr4.Runtime.Misc;
+using Antlr4.Runtime.Tree;
+using DatabaseMapper.Core.Parser.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using static DatabaseMapper.Core.Parser.TSqlParser;
 
 namespace DatabaseMapper.Core.Parser
 {
     public class TSqListener : TSqlParserBaseListener
     {
+        public string OriginalQuery { get; }
         public Dictionary<string, string> TableAliases { get; }
-        public Dictionary<string, int> Tables { get; }
-        public List<Tuple<string, string>> Relations { get; }
 
-        public TSqListener()
+        public QueryMetadata Metadata { get; }
+
+        public TSqListener(string query)
         {
-            Tables = new Dictionary<string, int>();
+            OriginalQuery = query;
+            Metadata = new QueryMetadata();
             TableAliases = new Dictionary<string, string>();
-            Relations = new List<Tuple<string, string>>();
         }
 
         public override void EnterTable_source_item([NotNull] TSqlParser.Table_source_itemContext ctx)
@@ -32,10 +37,14 @@ namespace DatabaseMapper.Core.Parser
                 else if (!TableAliases.ContainsKey(currentTableName))
                     TableAliases.Add(currentTableName, currentTableName);
 
-                if (!Tables.ContainsKey(currentTableName))
-                    Tables.Add(currentTableName, 0);
 
-                Tables[currentTableName] += 1;
+                var table = Metadata.Tables.Find(t => t.TableName == currentTableName);
+                if (table is null)
+                {
+                    table = new QueryTable(currentTableName);
+                    Metadata.Tables.Add(table);
+                }
+                table.IncrementOcurrencies();
             }
         }
 
@@ -55,7 +64,7 @@ namespace DatabaseMapper.Core.Parser
                         string leftColumnName = ExtractColumnName(leftColumn);
                         string rigthColumnName = ExtractColumnName(rigthColumn);
                         if (!String.IsNullOrWhiteSpace(leftColumnName) && !String.IsNullOrWhiteSpace(rigthColumnName))
-                            Relations.Add(new Tuple<string, string>(leftColumnName, rigthColumnName));
+                            Metadata.Relations.Add(new QueryRelation(leftColumnName, rigthColumnName));
                     }
                 }
             }
@@ -68,7 +77,11 @@ namespace DatabaseMapper.Core.Parser
 
         public override void ExitSelect_statement([NotNull] TSqlParser.Select_statementContext context)
         {
-            if (Relations.Count <= 0)
+            var query = OriginalQuery;
+            Metadata.EcalcFilters.ForEach(f => query = query.Replace(f.Text, String.Empty).Trim());
+            Metadata.RealQuery = query;
+
+            if (Metadata.Relations.Count <= 0)
                 return;
 
             Debug.WriteLine("Aliases: ");
@@ -76,8 +89,31 @@ namespace DatabaseMapper.Core.Parser
                 Debug.WriteLine($"{tableName} -> {TableAliases[tableName]}");
 
             Debug.WriteLine("Relations: ");
-            foreach (var relation in Relations)
-                Debug.WriteLine($"{relation.Item1} <-> {relation.Item2}");
+            foreach (var relation in Metadata.Relations)
+                Debug.WriteLine($"{relation.LeftTable} <-> {relation.RightTable}");
+        }
+
+        public override void EnterEfilter_statement([NotNull] TSqlParser.Efilter_statementContext context)
+        {
+            if (!context.IsEmpty && context.GetChild(1) is TerminalNodeImpl filterName && context.GetChild(2) is TSqlParser.Data_typeContext dataType)
+            {
+                var ecalcFilter = new EcalcFilter { Name = filterName.GetText(), Type = dataType.GetText() };
+                ecalcFilter.Text = context.Start.InputStream.GetText(new Interval(context.Start.StartIndex, context.Stop.StopIndex));
+                if (context.children.Any(c => c is As_column_aliasContext))
+                {
+                    var asColumnAliasCtx = context.GetRuleContext<As_column_aliasContext>(0);
+                    ecalcFilter.Alias = asColumnAliasCtx.GetChild<Column_aliasContext>(0).GetText().Replace("\'", String.Empty);
+                }
+
+                if (context.children.Any(c => c is Default_expressionContext))
+                {
+                    var asColumnAliasCtx = context.GetRuleContext<Default_expressionContext>(0);
+                    ecalcFilter.DefaultValue = asColumnAliasCtx.GetChild(1).GetText();
+                }
+
+                Metadata.EcalcFilters.Add(ecalcFilter);
+
+            }
         }
 
         /// <summary>

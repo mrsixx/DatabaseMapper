@@ -21,19 +21,14 @@ namespace DatabaseMapper.Core.Parser
         public QueryMetadata ExtractMetadata()
         {
             var reader = new StringReader(_query);
-            var charStream = new AntlrInputStream(reader);
-            var lexer = new TSqlLexer(new CaseChangingCharStream(charStream, true));
+            var charStream = new CaseChangingCharStream(new AntlrInputStream(reader), true);
+            var lexer = new TSqlLexer(charStream);
             var tokenStream = new CommonTokenStream(lexer);
             var parser = new TSqlParser(tokenStream);
             var fileCtx = parser.tsql_file();
-            var listener = new TSqListener();
-            var metadata = new QueryMetadata();
+            var listener = new TSqListener(_query);
             _walker.Walk(listener, fileCtx);
-
-
-            metadata.CopyTables(listener.Tables);
-            metadata.CopyRelationships(listener.Relations);
-            return metadata;
+            return listener.Metadata;
         }
     }
 }

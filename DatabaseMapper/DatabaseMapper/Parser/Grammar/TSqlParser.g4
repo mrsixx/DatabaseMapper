@@ -48,6 +48,7 @@ sql_clauses
     : dml_clause SEMI?
     | cfl_statement SEMI?
     | another_statement SEMI?
+    | efilter_statement SEMI
     | ddl_clause SEMI?
     | dbcc_clause SEMI?
     | backup_statement SEMI?
@@ -2769,6 +2770,14 @@ declare_statement
     | DECLARE loc+=declare_local (',' loc+=declare_local)*
     | DECLARE LOCAL_ID AS? xml_type_definition
     | WITH XMLNAMESPACES '(' xml_dec+=xml_declaration (',' xml_dec+=xml_declaration)* ')'
+    ;
+
+efilter_statement
+    : EFILTER ECALC_ID data_type as_column_alias? default_expression?
+    ;
+
+default_expression
+    : DEFAULT  constant_expr=expression
     ;
 
 xml_declaration

@@ -1,26 +1,31 @@
 ﻿
 using System.Collections.Generic;
 using System;
+using System.Runtime.Serialization;
+using DatabaseMapper.Core.Parser.Models;
 
 namespace DatabaseMapper.Core.Parser
 {
     public class QueryMetadata
     {
-        public Dictionary<string, int> Tables { get; }
-        public List<Tuple<string, string>> Relations { get; }
+        public string RealQuery { get; set; }
+
+        public List<QueryTable> Tables { get; }
+
+        public List<QueryRelation> Relations { get; }
+
+        public List<EcalcFilter> EcalcFilters { get; }
 
         public QueryMetadata()
         {
-            Tables = new Dictionary<string, int>();
-            Relations= new List<Tuple<string, string>>();
+            Tables = new List<QueryTable>();
+            Relations = new List<QueryRelation>();
+            EcalcFilters = new List<EcalcFilter>();
         }
 
-        public void CopyTables(Dictionary<string, int> tables)
+        public void CopyQuery(string realQuery)
         {
-            foreach(var table in tables)
-                Tables.Add(table.Key, table.Value);
-        }
 
-        public void CopyRelationships(List<Tuple<string, string>> relationships) => Relations.AddRange(relationships);
+        }
     }
 }

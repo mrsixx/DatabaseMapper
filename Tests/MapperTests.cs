@@ -71,13 +71,13 @@ namespace Tests
             Assert.Contains(graph.Vertices, v => v.Table == "HUMANRESOURCES.EMPLOYEEJOBHISTORY");
             Assert.Contains(graph.Vertices, v => v.Table == "HUMANRESOURCES.JOBTITLE");
 
-            Assert.Contains(graph.Edges, e => e.SourceLabel == "HUMANRESOURCES.EMPLOYEE.EMPLOYEEID" && e.TargetLabel == "HUMANRESOURCES.EMPLOYEEDEPARTMENTHISTORY.EMPLOYEEID");
-            Assert.Contains(graph.Edges, e => e.SourceLabel == "HUMANRESOURCES.EMPLOYEEDEPARTMENTHISTORY.DEPARTMENTID" && e.TargetLabel == "HUMANRESOURCES.DEPARTMENT.DEPARTMENTID");
-            Assert.Contains(graph.Edges, e => e.SourceLabel == "HUMANRESOURCES.EMPLOYEE.EMPLOYEEID" && e.TargetLabel == "HUMANRESOURCES.EMPLOYEEJOBHISTORY.EMPLOYEEID");
-            Assert.Contains(graph.Edges, e => e.SourceLabel == "HUMANRESOURCES.EMPLOYEEJOBHISTORY.JOBTITLEID" && e.TargetLabel == "HUMANRESOURCES.JOBTITLE.JOBTITLEID");
+            Assert.Contains(graph.Edges, e => e.SourceLabel == "EMPLOYEE.EMPLOYEEID" && e.TargetLabel == "EMPLOYEEDEPARTMENTHISTORY.EMPLOYEEID");
+            Assert.Contains(graph.Edges, e => e.SourceLabel == "EMPLOYEEDEPARTMENTHISTORY.DEPARTMENTID" && e.TargetLabel == "DEPARTMENT.DEPARTMENTID");
+            Assert.Contains(graph.Edges, e => e.SourceLabel == "EMPLOYEE.EMPLOYEEID" && e.TargetLabel == "EMPLOYEEJOBHISTORY.EMPLOYEEID");
+            Assert.Contains(graph.Edges, e => e.SourceLabel == "EMPLOYEEJOBHISTORY.JOBTITLEID" && e.TargetLabel == "JOBTITLE.JOBTITLEID");
 
             var graphExporter = new GraphExporter();
-            graphExporter.ExportTableGraphToGraphviz(graph, @"C:\Users\mathe\Documents\graph.txt");
+            graphExporter.ExportTableGraphToGraphviz(graph, @"C:\Users\mathe\Documents\", "graph.txt");
         }
     }
 }
