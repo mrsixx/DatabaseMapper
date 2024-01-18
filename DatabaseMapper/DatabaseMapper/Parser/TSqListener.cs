@@ -124,6 +124,10 @@ namespace DatabaseMapper.Core.Parser
                     var defaultExpressionCtx = context.GetRuleContext<Efilter_default_expressionContext>(0);
                     filter.DefaultValue = _filterValueFactory.GetValue(filter, defaultExpressionCtx);
                 }
+                else if(context.children.Any(c => c is Efilter_detail_expressionContext))
+                {
+                    filter.IsDetail = true;
+                }
 
                 if(Metadata.Filters.Any(f => f.Name == filter.Name))
                     throw new InvalidOperationException($"{filter.Name} já está sendo utilizado como nome de outro filtro.");

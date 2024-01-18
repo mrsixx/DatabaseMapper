@@ -391,6 +391,7 @@ FILE_SNAPSHOT:                         'FILE_SNAPSHOT';
 FILLFACTOR:                            'FILLFACTOR';
 FILTER:                                'FILTER';
 EFILTER:                               'EFILTER';
+DETAIL:                                'DETAIL';
 FIRST:                                 'FIRST';
 FIRST_VALUE:                           'FIRST_VALUE';
 FMTONLY:                               'FMTONLY';

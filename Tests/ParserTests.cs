@@ -86,6 +86,30 @@ namespace Tests
         }
 
         [Fact]
+        public void QueryWithCustomFilterDetail()
+        {
+            var query = @"EFILTER &filtro1 INTEGER 'Código x' DEFAULT 20 DETAIL;
+                        EFILTER &filtro2 INTEGER AS 'Código pai' DETAIL;
+                        select first 10 * from arqos
+                            where (1=1)
+	                        and codseq between &filtro1 and &filtro2
+                            order by cdata desc";
+
+            var metadata = _queryParser.ExtractQueryMetadata(query);
+
+            Assert.Equal(2, metadata.Filters.Count);
+            Assert.Contains(metadata.Filters,
+                filter => filter.Name == "&filtro1"
+                && !filter.IsDetail
+                && filter.DefaultValue is FilterIntegerValue defaultValue
+                && defaultValue.Equals(20));
+            Assert.Contains(metadata.Filters,
+                filter => filter.Name == "&filtro2"
+                && filter.IsDetail
+                && filter.DefaultValue is null);
+        }
+
+        [Fact]
         public void QueryWithCustomFiltersRequiredParameters()
         {
             var query = @"EFILTER &filtroDtDe DATE 'Cdata de';

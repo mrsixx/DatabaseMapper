@@ -2773,7 +2773,11 @@ declare_statement
     ;
 
 efilter_statement
-    : EFILTER ECALC_ID efilter_data_type as_column_alias? efilter_default_expression?
+    : EFILTER ECALC_ID efilter_data_type as_column_alias? (efilter_default_expression|efilter_detail_expression)?
+    ;
+
+efilter_detail_expression
+    : DETAIL
     ;
 
 efilter_default_expression
