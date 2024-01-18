@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+using DatabaseMapper.Core.Parser.Exceptions;
 using DatabaseMapper.Core.Parser.Factories;
 using DatabaseMapper.Core.Parser.Interfaces;
 using DatabaseMapper.Core.Parser.Models;
@@ -89,6 +90,12 @@ namespace DatabaseMapper.Core.Parser
 
             Metadata.Filters.ForEach(f => query = query.Replace(f.Text, String.Empty).Trim());
             Metadata.RealQuery = query;
+
+            foreach(var match in System.Text.RegularExpressions.Regex.Matches(query, "&([a-zA-Z0-9$@#])+"))
+            {
+                if (!Metadata.Filters.Any(f => f.Name == match.ToString()))
+                    throw new UndeclaredFilterException(match.ToString());
+            }
 
             if (Metadata.Relations.Count <= 0)
                 return;

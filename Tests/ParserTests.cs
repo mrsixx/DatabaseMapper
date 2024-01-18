@@ -151,7 +151,7 @@ namespace Tests
         public void QueryWithUnmapedCustomFilter()
         {
             var query = @"SELECT * FROM USUARIO WHERE ID = &filtroUsuario";
-            Assert.Throws<InvalidOperationException>(() => _queryParser.ExtractQueryMetadata(query));
+            Assert.Throws<UndeclaredFilterException>(() => _queryParser.ExtractQueryMetadata(query));
         }
 
 
@@ -237,8 +237,7 @@ namespace Tests
 
                         select first 10 * from arqos
                             where (1=1)
-	                        and (cdata between &filtro5 and &filtro6
-                            or (cdata > &filtro7 and cdata < &filtro8))
+	                        and (cdata between &filtro5 and &filtro4)
                             and (codseq = &filtro1 or codseq != &filtro2 or codseq != &filtro2)
                             order by cdata desc";
 
