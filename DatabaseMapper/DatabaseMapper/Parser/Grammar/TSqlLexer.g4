@@ -390,7 +390,7 @@ FILE_NAME:                             'FILE_NAME';
 FILE_SNAPSHOT:                         'FILE_SNAPSHOT';
 FILLFACTOR:                            'FILLFACTOR';
 FILTER:                                'FILTER';
-EFILTER:                                'EFILTER';
+EFILTER:                               'EFILTER';
 FIRST:                                 'FIRST';
 FIRST_VALUE:                           'FIRST_VALUE';
 FMTONLY:                               'FMTONLY';
@@ -1171,6 +1171,21 @@ NANOSECOND:                            'NANOSECOND';
 TZOFFSET:                              'TZOFFSET';
 ISO_WEEK:                              'ISO_WEEK';
 WEEKDAY:                               'WEEKDAY';
+
+ETEXT:                                 'TEXT';
+EDECIMAL:                              'DECIMAL';
+EINTEGER:                              'INTEGER';
+EDATE:                                 'DATE';
+EDATETIME:                             'DATETIME';
+
+USUARIO:                               'USUARIO';
+DIAATUAL:                              'DIAATUAL';
+MESATUAL:                              'MESATUAL';
+ANOATUAL:                              'ANOATUAL';
+ONTEM:                                 'ONTEM';
+HOJE:                                  'HOJE';
+INICIOMES:                             'INICIO_MES_ATUAL';
+FIMMES:                                'FIM_MES_ATUAL';
 
 YEAR_ABBR:                             'yy' | 'yyyy';
 QUARTER_ABBR:                          'qq' | 'q';

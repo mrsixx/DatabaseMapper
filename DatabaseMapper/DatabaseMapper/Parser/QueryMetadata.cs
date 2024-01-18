@@ -14,13 +14,13 @@ namespace DatabaseMapper.Core.Parser
 
         public List<QueryRelation> Relations { get; }
 
-        public List<EcalcFilter> EcalcFilters { get; }
+        public List<Filter> Filters { get; }
 
         public QueryMetadata()
         {
             Tables = new List<QueryTable>();
             Relations = new List<QueryRelation>();
-            EcalcFilters = new List<EcalcFilter>();
+            Filters = new List<Filter>();
         }
 
         public void CopyQuery(string realQuery)

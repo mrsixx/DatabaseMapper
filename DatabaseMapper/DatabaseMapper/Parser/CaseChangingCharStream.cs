@@ -17,7 +17,7 @@ namespace DatabaseMapper.Core.Parser
     /// 'BEGIN' if constructor parameter upper=true but getText() would return
     /// 'BeGiN'.
     /// </summary>
-    public class CaseChangingCharStream : ICharStream
+    internal class CaseChangingCharStream : ICharStream
     {
         private ICharStream stream;
         private bool upper;

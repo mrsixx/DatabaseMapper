@@ -2773,11 +2773,12 @@ declare_statement
     ;
 
 efilter_statement
-    : EFILTER ECALC_ID data_type as_column_alias? default_expression?
+    : EFILTER ECALC_ID efilter_data_type as_column_alias? efilter_default_expression?
     ;
 
-default_expression
-    : DEFAULT  constant_expr=expression
+efilter_default_expression
+    : DEFAULT function=(USUARIO|HOJE|ONTEM|DIAATUAL|MESATUAL|ANOATUAL|INICIOMES|FIMMES)
+    | DEFAULT constant_expr=constant
     ;
 
 xml_declaration
@@ -5062,6 +5063,14 @@ data_type
     | ext_type=id_ IDENTITY ('(' seed=DECIMAL ',' inc=DECIMAL ')')?
     | double_prec=DOUBLE PRECISION?
     | unscaled_type=id_
+    ;
+
+efilter_data_type
+    : EDATE
+    | EDATETIME
+    | EINTEGER
+    | EDECIMAL
+    | ETEXT
     ;
 
 // https://msdn.microsoft.com/en-us/library/ms179899.aspx

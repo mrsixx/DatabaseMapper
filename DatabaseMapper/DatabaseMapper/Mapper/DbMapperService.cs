@@ -1,16 +1,21 @@
 ﻿using DatabaseMapper.Core.Graph;
 using DatabaseMapper.Core.Mapper.Interfaces;
 using DatabaseMapper.Core.Parser;
+using DatabaseMapper.Core.Parser.Interfaces;
 using System.Linq;
 
 namespace DatabaseMapper.Core.Mapper
 {
     public class DbMapperService : IDbMapperService
     {
+        private readonly IQueryParser _queryParser;
+        public DbMapperService()
+        {
+            _queryParser = new QueryParser();
+        }
         public void IncrementModel(TableGraph model, string query)
         {
-            var queryParser = new QueryParser(query);
-            var queryMetadata = queryParser.ExtractMetadata();
+            var queryMetadata = _queryParser.ExtractQueryMetadata(query);
             var tables = queryMetadata.Tables;
             var relationships = queryMetadata.Relations;
 

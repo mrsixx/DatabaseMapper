@@ -1,5 +1,7 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+using DatabaseMapper.Core.Parser.Factories;
+using DatabaseMapper.Core.Parser.Interfaces;
 using DatabaseMapper.Core.Parser.Models;
 using System;
 using System.Collections.Generic;
@@ -9,18 +11,24 @@ using static DatabaseMapper.Core.Parser.TSqlParser;
 
 namespace DatabaseMapper.Core.Parser
 {
-    public class TSqListener : TSqlParserBaseListener
+
+    internal class TSqListener : TSqlParserBaseListener
     {
         public string OriginalQuery { get; }
         public Dictionary<string, string> TableAliases { get; }
 
         public QueryMetadata Metadata { get; }
 
+        private readonly IFilterTypeFactory _filterTypeFactory;
+        private readonly IFilterValueFactory _filterValueFactory;
+
         public TSqListener(string query)
         {
             OriginalQuery = query;
             Metadata = new QueryMetadata();
             TableAliases = new Dictionary<string, string>();
+            _filterTypeFactory = new FilterTypeFactory();
+            _filterValueFactory = new FilterValueFactory();
         }
 
         public override void EnterTable_source_item([NotNull] TSqlParser.Table_source_itemContext ctx)
@@ -78,7 +86,8 @@ namespace DatabaseMapper.Core.Parser
         public override void ExitSelect_statement([NotNull] TSqlParser.Select_statementContext context)
         {
             var query = OriginalQuery;
-            Metadata.EcalcFilters.ForEach(f => query = query.Replace(f.Text, String.Empty).Trim());
+
+            Metadata.Filters.ForEach(f => query = query.Replace(f.Text, String.Empty).Trim());
             Metadata.RealQuery = query;
 
             if (Metadata.Relations.Count <= 0)
@@ -95,23 +104,32 @@ namespace DatabaseMapper.Core.Parser
 
         public override void EnterEfilter_statement([NotNull] TSqlParser.Efilter_statementContext context)
         {
-            if (!context.IsEmpty && context.GetChild(1) is TerminalNodeImpl filterName && context.GetChild(2) is TSqlParser.Data_typeContext dataType)
+            if (!context.IsEmpty && context.GetChild(1) is TerminalNodeImpl filterName && context.GetChild(2) is Efilter_data_typeContext dataType)
             {
-                var ecalcFilter = new EcalcFilter { Name = filterName.GetText(), Type = dataType.GetText() };
-                ecalcFilter.Text = context.Start.InputStream.GetText(new Interval(context.Start.StartIndex, context.Stop.StopIndex));
+                var filter = new Filter
+                {
+                    Name = filterName.GetText(),
+                    Type = _filterTypeFactory.GetType(dataType.GetText()),
+                    Text = context.Start.InputStream.GetText(new Interval(context.Start.StartIndex, context.Stop.StopIndex))
+                };
+
                 if (context.children.Any(c => c is As_column_aliasContext))
                 {
                     var asColumnAliasCtx = context.GetRuleContext<As_column_aliasContext>(0);
-                    ecalcFilter.Alias = asColumnAliasCtx.GetChild<Column_aliasContext>(0).GetText().Replace("\'", String.Empty);
+                    filter.Alias = asColumnAliasCtx.GetChild<Column_aliasContext>(0).GetText().Replace("\'", String.Empty);
                 }
 
-                if (context.children.Any(c => c is Default_expressionContext))
+                if (context.children.Any(c => c is Efilter_default_expressionContext))
                 {
-                    var asColumnAliasCtx = context.GetRuleContext<Default_expressionContext>(0);
-                    ecalcFilter.DefaultValue = asColumnAliasCtx.GetChild(1).GetText();
+                    var defaultExpressionCtx = context.GetRuleContext<Efilter_default_expressionContext>(0);
+                    filter.DefaultValue = _filterValueFactory.GetValue(filter, defaultExpressionCtx);
                 }
 
-                Metadata.EcalcFilters.Add(ecalcFilter);
+                if(Metadata.Filters.Any(f => f.Name == filter.Name))
+                    throw new InvalidOperationException($"{filter.Name} já está sendo utilizado como nome de outro filtro.");
+
+
+                Metadata.Filters.Add(filter);
 
             }
         }
