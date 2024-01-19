@@ -1,7 +1,7 @@
 ﻿using DatabaseMapper.Core.Graph;
 using DatabaseMapper.Core.Mapper.Interfaces;
-using DatabaseMapper.Core.Parser;
-using DatabaseMapper.Core.Parser.Interfaces;
+using MetaSql.Parser;
+using MetaSql.Parser.Interfaces;
 using System.Linq;
 
 namespace DatabaseMapper.Core.Mapper
